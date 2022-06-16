@@ -4,10 +4,12 @@ from scrapy.linkextractors import LinkExtractor
 from article_crawler.items import Article
 class WikipediaSpider(CrawlSpider):
     name = 'wikipedia'
-    allowed_domains = ['en.wikipedia.org']
+    allowed_domains = ['en.wikipedia.org/wiki/Main_Page']
     start_urls = ['http://en.wikipedia.org/wiki/Kevin_Bacon']
     
     rules: Rule(LinkExtractor(allow=r'wiki/((?!:).)*$'), callback='parse_info', follow=True)
+
+    custom_settings= {'FEED_URI': 'articles.xml', 'FEED_FORMAT': 'xml'}
 
     def parse_info(self, response):
 
